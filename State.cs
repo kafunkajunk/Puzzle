@@ -6,6 +6,19 @@ namespace a1{
 
   public class State{
     public int[] StateArray = new int[9];
+    private string _Key = "";
+
+      public string Key {
+	get{
+	  if(string.IsNullOrWhiteSpace(_Key)){
+	    _Key = string.Join("",StateArray);
+	  }
+	    return _Key;
+	}
+	set{
+	  _Key = value;
+	}
+      }
 
     public State(int[] input){
       StateArray = input;
@@ -15,7 +28,7 @@ namespace a1{
 
 	std.Write(StateArray[i]);
 	if((i + 1) % 3 == 0 ) std.WriteLine();
-	
+
       }
     }
 
@@ -31,6 +44,11 @@ namespace a1{
       clone[index2] = item1; 
 
       return clone;
+    }
+    public bool IsEqualToGoal(){
+
+      return StateArray.SequenceEqual(GlobalVar.GOAL);
+
     }
 
   }
