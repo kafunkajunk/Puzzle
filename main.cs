@@ -1,6 +1,7 @@
 #define DEBUG
 using System;
 using std = System.Console;
+using System.Diagnostics;
 namespace a1{
 
   public static class GlobalVar {
@@ -11,10 +12,13 @@ namespace a1{
 
     public static void Main(string[] args){
 
+      
+
 #if DEBUG
 
 
-      var output = new int[]{1,2,3,4,5,6,7,0,8};
+      //var output = new int[]{1,2,3,4,5,6,7,0,8};
+      var output = new int[]{1,2,3,0,7,5,4,6,8};
 
 #else 
 

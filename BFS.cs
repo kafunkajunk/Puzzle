@@ -11,19 +11,19 @@ namespace a1{
 
 
 #if DEBUG
-      
-	Console.WriteLine("Beginning Algorithm");
-	Console.WriteLine("Enqueuing initial state: {0}",CurrentState.Key);
+
+      Console.WriteLine("Beginning Algorithm");
+      Console.WriteLine("Enqueuing initial state: {0}",CurrentState.Key);
 #endif
       watch = new Stopwatch();
       watch.Start();
 
       OpenSet.Enqueue(CurrentState);
-
+try{
       while(OpenSet.Count > 0){ //while openset is not empty
 
 	//grab a state from the open set
-	var CurrentState = OpenSet.Dequeue();
+	CurrentState = OpenSet.Dequeue();
 
 #if DEBUG
 	Console.WriteLine("Removed from queue: {0}",CurrentState);
@@ -31,7 +31,6 @@ namespace a1{
 
 	//put current node into the closed set
 	ClosedSet.Add(CurrentState.Key,CurrentState);
-
 
 	//check if current node is goal state
 	if(CurrentState.IsEqualToGoal()){
@@ -47,8 +46,24 @@ namespace a1{
 	  Console.WriteLine("index of hole: {0}", index);
 #endif
 	  var list = BuildChildren(index);
+
+#if DEBUG 
+	  Console.WriteLine("Children of node: {0}", CurrentState);
 	  foreach(var item in list){
-	    if(ClosedSet.ContainsKey(item.Key)) continue;
+
+	    item.Format();
+	    Console.WriteLine();
+	  }
+
+#endif 
+	  foreach(var item in list){
+	    if(ClosedSet.ContainsKey(item.Key)){
+#if DEBUG 
+	      Console.WriteLine("ClosedSet already contains key {0}", item.Key);
+#endif
+
+	      continue;
+	    }
 	    OpenSet.Enqueue(item);
 	    moves.AddLast(item);
 	  }
@@ -61,6 +76,10 @@ namespace a1{
 	}
 
       }
+}catch(ArgumentException ex){
+  Console.WriteLine(ex.message + ex.StackTrace);
+  Console.WriteLine(
+}
 
       watch.Stop();
       System.Console.WriteLine("Elapsed time: {0}",watch.Elapsed.Seconds);
