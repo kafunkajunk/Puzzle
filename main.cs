@@ -11,10 +11,10 @@ namespace a1{
 
     public static void Main(string[] args){
 
-#if(DEBUG)
+#if DEBUG
 
 
-      var output = new int[]{1,0,2,3,4,5,6,7,8};
+      var output = new int[]{1,2,3,4,5,6,7,0,8};
 
 #else 
 
@@ -23,10 +23,7 @@ namespace a1{
 
 #endif
 
-      var sObj = new State(output);
-      sObj.Format();
-
-      var p = new Puzzle<BreadthFirst>(GlobalVar.GOAL);
+      var p = new Puzzle<BreadthFirst>(output);
       p.Begin();
 
     }

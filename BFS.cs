@@ -9,6 +9,12 @@ namespace a1{
     public Dictionary<string,State> ClosedSet = new Dictionary<string,State>();
     public override void Execute(){
 
+
+#if DEBUG
+      
+	Console.WriteLine("Beginning Algorithm");
+	Console.WriteLine("Enqueuing initial state: {0}",CurrentState.Key);
+#endif
       watch = new Stopwatch();
       watch.Start();
 
@@ -17,18 +23,18 @@ namespace a1{
       while(OpenSet.Count > 0){ //while openset is not empty
 
 	//grab a state from the open set
-	var CurrentNode = OpenSet.Dequeue();
+	var CurrentState = OpenSet.Dequeue();
 
 #if DEBUG
-	Console.WriteLine("Removed from queue: {0}",CurrentNode);
+	Console.WriteLine("Removed from queue: {0}",CurrentState);
 #endif
 
 	//put current node into the closed set
-	ClosedSet.Add(CurrentNode.Key,CurrentNode);
+	ClosedSet.Add(CurrentState.Key,CurrentState);
 
 
 	//check if current node is goal state
-	if(CurrentNode.IsEqualToGoal()){
+	if(CurrentState.IsEqualToGoal()){
 	  break; 
 
 	} else{
@@ -36,6 +42,10 @@ namespace a1{
 	  //if not goal state, find each state accessible from current state (children)
 	  //check if they are already present in the closed set
 	  var index = CurrentState.GetIndexOfHole();
+
+#if DEBUG
+	  Console.WriteLine("index of hole: {0}", index);
+#endif
 	  var list = BuildChildren(index);
 	  foreach(var item in list){
 	    if(ClosedSet.ContainsKey(item.Key)) continue;

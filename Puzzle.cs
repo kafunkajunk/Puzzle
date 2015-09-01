@@ -19,6 +19,7 @@ namespace a1{
     }
     public void Begin(){
 
+      iObj.CurrentState.Format();
       iObj.Execute();
 
     }

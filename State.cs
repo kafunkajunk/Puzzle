@@ -51,6 +51,13 @@ namespace a1{
 
     }
 
+    public override string ToString(){
+      string s = "";
+      foreach(var i in StateArray){
+       s += i;
+      }
+      return s;
+    }
   }
 }
 
