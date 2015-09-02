@@ -7,9 +7,8 @@ namespace a1{
 
     public Queue<State> OpenSet = new Queue<State>();
     public Dictionary<string,State> ClosedSet = new Dictionary<string,State>();
+
     public override void Execute(){
-
-
 #if DEBUG
 
       Console.WriteLine("Beginning Algorithm");
@@ -37,15 +36,30 @@ namespace a1{
 	  //check if current node is goal state
 	  if(CurrentState.IsEqualToGoal()){
 
+	    watch.Stop();
+
+	    Console.WriteLine("Move list: ");
+	    var move = moves.First;
+	    for(var i = 0; i < 100;i++){
+
+	      Console.WriteLine( move.Value );
+
+	      move = move.Next;
+
+	    }
+	    if(moves.Count > 100) Console.WriteLine("More than 100 ...");
+
+	    Console.WriteLine("Goal: ");
+	    new State(GlobalVar.GOAL).Format();
 #if DEBUG
 	    Console.WriteLine("Goal found");
 #endif
 	    break; 
 
-	  } else{
+	  } else {
 
 	    //if not goal state, find each state accessible from current state (children)
-	    //check if they are already present in the closed set
+	    //check if they are already present in the closed set if so ignore them 
 	    var index = CurrentState.GetIndexOfHole();
 
 #if DEBUG
@@ -63,17 +77,15 @@ namespace a1{
 
 #endif 
 	    foreach(var item in list){
-	      if(ClosedSet.ContainsKey(item.Key)){
+	      if(ClosedSet.ContainsKey(item.Key)){ 
 #if DEBUG 
 		Console.WriteLine("ClosedSet already contains key {0}", item.Key);
 #endif
-
 		continue;
 	      }
-	      OpenSet.Enqueue(item);
+	      OpenSet.Enqueue(item); // if they aren't present add them to the queue. 
 	      moves.AddLast(item);
 	    }
-
 	  }
 
 	  //if openset is empty and we never found the goal, there is no solution.
@@ -87,8 +99,7 @@ namespace a1{
 	Console.WriteLine("Count: {0}",moves.Count);
       }
 
-      watch.Stop();
-      System.Console.WriteLine("Elapsed time: {0}",watch.Elapsed.Seconds);
+      System.Console.WriteLine("Elapsed time: {0} ms", watch.Elapsed.Milliseconds);
     }
 
     ///<summary>
