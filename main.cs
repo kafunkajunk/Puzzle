@@ -17,8 +17,9 @@ namespace a1{
 #if DEBUG
 
 
-      //var output = new int[]{1,2,3,4,5,6,7,0,8};
-      var output = new int[]{1,2,3,0,7,5,4,6,8};
+      //var output = new int[]{1,2,3,4,0,5,6,7,8};
+      //var output = new int[]{1,2,3,0,7,5,4,6,8};
+      var output = new int[] {4,2,3,1,5,7,6,8,0};
 
 #else 
 
@@ -27,8 +28,11 @@ namespace a1{
 
 #endif
 
-      var p = new Puzzle<BreadthFirst>(output);
-      p.Begin();
+      //var p = new Puzzle<BreadthFirst>(output);
+      //p.Begin();
+      var d = new Puzzle<DepthFirstSearch>(output);
+      d.Begin();
+      Console.Read();
 
     }
     public static int[] ParseInput(string input){
