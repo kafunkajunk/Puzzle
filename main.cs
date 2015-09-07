@@ -17,9 +17,9 @@ namespace a1{
 #if DEBUG
 
 
-      var output = new int[]{1,2,3,4,0,5,6,7,8};
+      //var output = new int[]{1,2,3,4,0,5,6,7,8};
       //var output = new int[]{1,2,3,0,7,5,4,6,8};
-      //var output = new int[] {4,2,3,1,5,7,6,8,0};
+      var output = new int[] {4,2,3,1,5,7,6,8,0};
       //var output = new int[] {1,3,6,7,4,5,8,0,2};
 
 
@@ -34,8 +34,10 @@ namespace a1{
       //p.Begin();
       //var d = new Puzzle<DepthFirstSearch>(output);
       //d.Begin();
-      var l = new Puzzle<DepthFirstLimited>(output);
-      l.Begin();
+      //var l = new Puzzle<DepthFirstLimited>(output);
+      //l.Begin();
+      var t = new Puzzle<IterativeDepth>(output);
+      t.Begin();
       Console.Read();
 
     }
