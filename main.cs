@@ -18,8 +18,13 @@ namespace a1{
 
 
       //var output = new int[]{1,2,3,4,0,5,6,7,8};
-      var output = new int[]{1,2,3,0,7,5,4,6,8};
-      //var output = new int[] {4,2,3,1,5,7,6,8,0};
+<<<<<<< HEAD
+=======
+      //var output = new int[]{1,2,3,0,7,5,4,6,8};
+      var output = new int[] {4,2,3,1,5,7,6,8,0};
+      //var output = new int[] {1,3,6,7,4,5,8,0,2};
+
+>>>>>>> 3564438b039edcddbe05e76f3d572e4beaa09da8
 
 #else 
 
@@ -28,9 +33,19 @@ namespace a1{
 
 #endif
 
-      var p = new Puzzle<BiDirectional>(output);
-      p.Begin();
+<<<<<<< HEAD
      
+=======
+      //var p = new Puzzle<BreadthFirst>(output);
+      //p.Begin();
+      //var d = new Puzzle<DepthFirstSearch>(output);
+      //d.Begin();
+      //var l = new Puzzle<DepthFirstLimited>(output);
+      //l.Begin();
+      var t = new Puzzle<IterativeDepth>(output);
+      t.Begin();
+      Console.Read();
+>>>>>>> 3564438b039edcddbe05e76f3d572e4beaa09da8
 
     }
     public static int[] ParseInput(string input){

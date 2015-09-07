@@ -1,3 +1,4 @@
+#define DEBUG
 using System.Diagnostics;
 using System.Collections.Generic;
 using System;
@@ -48,7 +49,7 @@ public void recursive_depth(State state){
 #endif
         var list = BuildChildren(index);
 #if DEBUG 
-	    Console.WriteLine("Children of node: {0}", CurrentState);
+	    Console.WriteLine("Children of node: {0}", state);
 	    foreach(var item in list){
 
 	      item.Format();
@@ -76,7 +77,7 @@ public void recursive_depth(State state){
         }
         recursive_depth(state);
     }
-
+    System.Console.WriteLine("Elapsed time: {0} ms", watch.Elapsed.Milliseconds);
 }
 
 public List<State> BuildChildren(int index)

@@ -45,9 +45,12 @@ namespace a1{
 
       return clone;
     }
-    public bool IsEqualToGoal(){
+    public bool IsEqualToGoal(int[] goal = null){
 
-      return StateArray.SequenceEqual(GlobalVar.GOAL);
+
+
+      goal = goal ?? GlobalVar.GOAL;
+      return StateArray.SequenceEqual(goal);
 
     }
 
