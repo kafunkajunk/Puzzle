@@ -20,7 +20,7 @@ namespace a1{
 
       recursive_depth(CurrentState);
 
-      System.Console.WriteLine("Elapsed time: {0} ms", watch.Elapsed.Milliseconds);
+      Console.WriteLine("Elapsed time: {0} ms", watch.Elapsed.Milliseconds);
     }
 
     public void recursive_depth(State state){

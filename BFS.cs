@@ -60,7 +60,6 @@ namespace a1{
 	    Console.WriteLine("Goal: ");
 	    new State(GlobalVar.GOAL).Format();
 
-	    Console.ReadLine();
 	    break; 
 
 	  } else {
@@ -104,22 +103,18 @@ namespace a1{
 	Console.WriteLine("Count: {0}",moves.Count);
       }
 
-      System.Console.WriteLine("Elapsed time: {0} ms", watch.Elapsed.Milliseconds);
+      Console.WriteLine("Elapsed time: {0} ms", watch.Elapsed.Milliseconds);
     }
 
     private void SolutionFound(State FinalState){
 
-      //Debugger.Break();
       var temp = FinalState;
-
-
       while(true){
 
 	if(!parents.ContainsKey(temp.Key)) break;
 
 	moves.AddFirst(parents[temp.Key]);
 	temp = parents[temp.Key];
-
 
       }
     }

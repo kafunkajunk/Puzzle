@@ -1,5 +1,4 @@
-﻿
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Collections.Generic;
 using System;
 namespace a1
@@ -18,6 +17,8 @@ namespace a1
     public override void Execute()
     {
       watch = new Stopwatch();
+      Console.WriteLine("Initial State: " );
+      CurrentState.Format();
       watch.Start();
 
       if (!IDDFS(CurrentState))
@@ -25,7 +26,6 @@ namespace a1
 	Console.WriteLine("Depth reached. No solution found.");
       }
       Console.WriteLine("Elapsed time: {0} ms", watch.Elapsed.Milliseconds);
-
 
     }
 
@@ -35,8 +35,16 @@ namespace a1
       for (int depth = 0; depth < 31; depth++)
       {
 	found = recursive_depth(root, depth);
-	if (found != null)
-	  return true;
+
+	if (found != null) return true;
+
+	//since we are starting the next loop, the sets for open and closed must be cleared
+	//otherwise the search will never be able to traverse down deeper.
+
+	ClosedSet.Clear();
+	OpenSet.Clear();
+	parents.Clear();
+
       }
       return false;
     }
@@ -45,6 +53,10 @@ namespace a1
     {
       if (depth == 0 && state.IsEqualToGoal())
       {
+
+	watch.Stop();
+
+	SolutionFound(state);
 	return state;
       }
 
@@ -80,7 +92,7 @@ namespace a1
 	  List<State> children = new List<State>();
 	  foreach (var item in list)
 	  {
-	    if (ClosedSet.ContainsKey(item.Key))
+	    if (ClosedSet.ContainsKey(item.Key)) //the second depth won't be able to add its children into the open set thus never finding the solution.
 	    {
 #if DEBUG
 	      Console.WriteLine("ClosedSet already contains key {0}", item.Key);
@@ -98,15 +110,17 @@ namespace a1
 
 	  if (OpenSet.Count == 0)
 	  {
-	    
+
 	    throw new Exception("no solution");
 	  }
 
 	  foreach (var child in children)
 	  {
 	    found = recursive_depth(child, depth--);
+
 	    if (found != null)
 	      return found;
+
 	  }
 	  return null;
 	}
@@ -126,7 +140,7 @@ namespace a1
 	temp = parents[temp.Key];
       }
 
- ;     Console.WriteLine("Move list: ");
+      Console.WriteLine("Move list: ");
       var move = moves.First;
       int count = 0;
       while(move != null) {

@@ -104,6 +104,7 @@ namespace a1{
 	}
       }
       watch.Stop();
+      Console.WriteLine("Elapsed time: {0} ms", watch.Elapsed.Milliseconds);
     }
 
     private void SolutionFound(State FinalState){
