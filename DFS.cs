@@ -8,6 +8,9 @@ namespace a1{
       public Dictionary<string, State> ClosedSet = new Dictionary<string, State>();
 
       
+    public DepthFirstSearch(int[] arr){
+      CurrentState = new State(arr);
+    }
 
 public override void Execute(){
     watch = new Stopwatch();

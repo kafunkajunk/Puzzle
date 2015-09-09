@@ -10,6 +10,9 @@ namespace a1
         public Dictionary<string, State> ClosedSet = new Dictionary<string, State>();
         public int depth = 0;
 
+	public DepthFirstLimited(int[] arr){
+	  CurrentState = new State(arr);
+	}
 
 
         public override void Execute()

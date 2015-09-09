@@ -3,24 +3,19 @@ namespace a1{
   ///<summary>
   /// Main Class. Composed of algorithm and ...
   ///</summary>
-  public class Puzzle<T> where T : Algorithm, new(){
+  public class Puzzle {
     
     // Implementation of search algorithm. Could be uninformed, BFS, DFS, etc.
-    public T iObj;
-    
-    //starting state of puzzle.
-    public State start;
+    public Algorithm aObj;
 
-    public Puzzle( int[] input ){
+    public Puzzle( Algorithm obj){
       
-      start = new State(input);
-      iObj = new T();
-      iObj.CurrentState = start;
+      aObj = obj;
+      
     }
     public void Begin(){
 
-      iObj.CurrentState.Format();
-      iObj.Execute();
+      aObj.Execute();
 
     }
   }
