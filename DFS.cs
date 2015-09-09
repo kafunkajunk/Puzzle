@@ -1,4 +1,4 @@
-#define DEBUG
+
 using System.Diagnostics;
 using System.Collections.Generic;
 using System;
@@ -19,6 +19,8 @@ namespace a1{
       watch.Start();
 
       recursive_depth(CurrentState);
+
+      System.Console.WriteLine("Elapsed time: {0} ms", watch.Elapsed.Milliseconds);
     }
 
     public void recursive_depth(State state){
@@ -31,21 +33,8 @@ namespace a1{
       if (state.IsEqualToGoal())
       {
 	watch.Stop();
+	SolutionFound(state);
 
-	Console.WriteLine("Move list: ");
-	var move = moves.First;
-	for (var i = 0; i < 100; i++)
-	{
-	  if (moves.Count > 1)
-	  {
-	    Console.WriteLine(move.Value);
-	    move = move.Next;
-	  }
-	}
-	if (moves.Count > 100) Console.WriteLine("More than 100 ...");
-
-	Console.WriteLine("Goal: ");
-	new State(GlobalVar.GOAL).Format();
       }
       else
       {
@@ -70,9 +59,10 @@ namespace a1{
 	    continue;
 	  }
 	  OpenSet.Push(item);
+	  if(!parents.ContainsKey(item.Key)) parents.Add(item.Key,state);
 	}
 	state = OpenSet.Pop();
-	moves.AddLast(state);
+	
 	//Debugger.Break();
 	if (OpenSet.Count == 0)
 	{
@@ -80,8 +70,34 @@ namespace a1{
 	}
 	recursive_depth(state);
       }
-      System.Console.WriteLine("Elapsed time: {0} ms", watch.Elapsed.Milliseconds);
+    
     }
+    private void SolutionFound(State FinalState){
 
+      var temp = FinalState;
+
+      while(true){
+
+	if(!parents.ContainsKey(temp.Key)) break;
+
+	moves.AddFirst(parents[temp.Key]);
+	temp = parents[temp.Key];
+      }
+
+	Console.WriteLine("Move list: ");
+	var move = moves.First;
+	int count = 0;
+	while(move != null) {
+
+	  Console.WriteLine( move.Value );
+	  move = move.Next;
+
+	  if(count++ > 100) break;
+
+	}
+	if(moves.Count > 100) Console.WriteLine("More than 100 ...");
+	Console.WriteLine("Goal: ");
+	new State(GlobalVar.GOAL).Format();
+      }
   }
 }

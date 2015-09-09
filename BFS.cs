@@ -46,15 +46,18 @@ namespace a1{
 	    Console.WriteLine("Move list: ");
 	    SolutionFound(CurrentState);
 	    var move = moves.First;
-	    do{
+	    int count = 0;
+	    while(move != null) {
 
 	      Console.WriteLine( move.Value );
 	      move = move.Next;
+
+	      if(count++ > 100) break;
+
 	    }
-	    while(move != null);
-
-
+	    
 	    if(moves.Count > 100) Console.WriteLine("More than 100 ...");
+	    Console.WriteLine("Goal: ");
 	    new State(GlobalVar.GOAL).Format();
 
 	    Console.ReadLine();

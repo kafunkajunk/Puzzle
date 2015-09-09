@@ -23,7 +23,8 @@ namespace a1{
     public override void Execute(){
       watch = new Stopwatch();
       Console.WriteLine("Beginning execution for Bi-directional");
-      Console.WriteLine("");
+      Console.WriteLine("Initial State: ");
+      CurrentState.Format();
       watch.Start();
 
       FrontOpenSet.Enqueue(CurrentState);
@@ -43,6 +44,7 @@ namespace a1{
 	  watch.Stop();
 
 	  Console.WriteLine("Found goal through front open set, no intersection");
+	  SolutionFound(front);
 	  break;
 
 
@@ -51,6 +53,7 @@ namespace a1{
 	  watch.Stop();
 
 	  Console.WriteLine("Found goal through back open set, no intersection");
+	  SolutionFound(back);
 	  break;
 	}
 
@@ -65,7 +68,7 @@ namespace a1{
 	  FrontOpenSet.Enqueue(child);
 
 	  if(!frontparents.ContainsKey(child.Key)) frontparents.Add(child.Key,front);
-	  
+
 
 	}
 
@@ -99,7 +102,6 @@ namespace a1{
 	if(BackOpenSet.Count == 0 && FrontOpenSet.Count == 0){
 	  throw new Exception("no solution");
 	}
-
       }
       watch.Stop();
     }
@@ -108,7 +110,7 @@ namespace a1{
 
       //Debugger.Break();
       var temp = FinalState;
-    
+
 
       while(true){
 
@@ -116,7 +118,7 @@ namespace a1{
 
 	moves.AddLast(frontparents[temp.Key]);
 	temp = frontparents[temp.Key];
-       
+
 
       }
 
@@ -131,15 +133,19 @@ namespace a1{
 
       Console.WriteLine("Move list: ");
       var move = moves.First;
-      while(move.Next != null){
-      //for(var i = 0; i < moves.Count;i++){
+      int count = 0;
+      while(move != null){
 
 	Console.WriteLine( move.Value );
-
 	move = move.Next;
+	if(count++ > 100)break;
 
       }
       if(moves.Count > 100) Console.WriteLine("More than 100 ...");
+
+
+      Console.WriteLine("Goal: ");
+      new State(GlobalVar.GOAL).Format();
 
     }
 
