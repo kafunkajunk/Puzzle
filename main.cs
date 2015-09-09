@@ -18,6 +18,7 @@ namespace a1{
       //var output = new int[] {4,2,3,1,5,7,6,8,0};
       //var output = new int[] {1,3,6,7,4,5,8,0,2};
 
+      std.WriteLine("Enter path for puzzle file");
       var user_input = std.ReadLine();
       int[] output;
 
