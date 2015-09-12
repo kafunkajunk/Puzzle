@@ -8,7 +8,7 @@ namespace a1{
 
     public queue openset = new queue(362880); //9! = 362880 I wouldn't think we'd ever have an open set bigger than this.
     public Dictionary<string,State> parents = new Dictionary<string,State>();
-    public static Dictionary<string,int> cost_so_far = new Dictionary<string,int>();
+    public Dictionary<string,int> cost_so_far = new Dictionary<string,int>();
 
 
     public astar(int[] arr){
@@ -20,6 +20,9 @@ namespace a1{
 
       openset.Enqueue(new PriorityQueueState(CurrentState),0);
       cost_so_far.Add(CurrentState.Key, 0);
+      Console.WriteLine("Initial State:");
+
+      CurrentState.Format();
 
       watch = new Stopwatch();
       watch.Start();
@@ -31,6 +34,8 @@ namespace a1{
 	  watch.Stop();
 	  
 	  SolutionFound(CurrentState);
+
+	  Console.WriteLine("Elapsed time: {0} ms", watch.Elapsed.Milliseconds);
 	  return;
 
 	} else { 
@@ -56,26 +61,6 @@ namespace a1{
     }
 
 
-    public static int Hueristics(State state){
-      // f(node) = g(node) + h(node)
-      //1. compute the amount to reach current state, done by looking at costSoFar map. ( function g )
-      //2. compute from current to goal based on how many nodes in the state are out of place from the goal. ( function h )
-
-
-      return astar.cost_so_far[state.Key] + compute_h_func(state);
-
-    }
-
-    public static int compute_h_func(State state){
-      var val = 0;
-      for(int i = 0; i <  state.StateArray.Length; i++){
-	var citem = state.StateArray[i];
-	var gitem = GlobalVar.GOAL[i];
-
-	if(citem != gitem) val++;
-      }
-      return val;
-    }
     public static int ManVal(int[] arr){
 
       //since we represent our data in an 1D array, the way we compute the manhattan distance can look a little wonky.
