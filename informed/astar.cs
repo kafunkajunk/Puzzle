@@ -7,8 +7,7 @@ namespace a1{
   public class astar : Algorithm {
 
     public queue openset = new queue(362880); //9! = 362880 I wouldn't think we'd ever have an open set bigger than this.
-    //public HashSet<string> closed_set = new HashSet<string>();
-    public Dictionary<string,string> parents = new Dictionary<string,string>();
+    public Dictionary<string,State> parents = new Dictionary<string,State>();
     public static Dictionary<string,int> cost_so_far = new Dictionary<string,int>();
 
 
@@ -21,6 +20,7 @@ namespace a1{
 
       openset.Enqueue(new PriorityQueueState(CurrentState),0);
       cost_so_far.Add(CurrentState.Key, 0);
+
       watch = new Stopwatch();
       watch.Start();
       while(openset.Count > 0){
@@ -28,7 +28,9 @@ namespace a1{
 	var currentnode = openset.Dequeue();
 	CurrentState = currentnode.NodeState;
 	if(CurrentState.IsEqualToGoal()){
-	  Console.WriteLine("found solution");
+	  watch.Stop();
+	  
+	  SolutionFound(CurrentState);
 	  return;
 
 	} else { 
@@ -43,7 +45,7 @@ namespace a1{
 	      int priority = new_cost + ManVal(child.StateArray);
 	      openset.Enqueue(new PriorityQueueState(child),(double)priority);
 
-	      if(!parents.ContainsKey(child.Key)) parents[child.Key] = CurrentState.Key;
+	      if(!parents.ContainsKey(child.Key)) parents[child.Key] = CurrentState;
 
 	    }
 	  }
@@ -81,14 +83,14 @@ namespace a1{
       // this method works by representing each position of the puzzle as x,y coordinate in euclidean space
       // the entire goal state of the puzzle looking like so:
       /* 
-	 1     2     3
+	   1     2     3
 	 (0,0) (0,1) (0,2) - row of 0
-	 4     5     6
+	   4     5     6
 	 (1,0) (1,1) (1,2) - row of 1
-	 7     8     0
+	   7     8     0
 	 (2,0) (2,1) (2,2) - row of 2
 
-*/
+      */
 
       // lets suppose the puzzle looks like so:
       /*
@@ -120,12 +122,36 @@ namespace a1{
       }
       return manSum;
     }
+    public void SolutionFound(State FinalState){
+
+      var temp = FinalState;
+      while(true){
+	if(!parents.ContainsKey(temp.Key)) break;
+	moves.AddFirst(parents[temp.Key]);
+	temp = parents[temp.Key];
+      }
+
+      Console.WriteLine("Move list: ");
+      var move = moves.First;
+      int count = 0;
+      while(move != null) {
+
+	Console.WriteLine( move.Value );
+	move = move.Next;
+
+	if(count++ > 100) break;
+
+      }
+      if(moves.Count > 100) Console.WriteLine("More than 100 ...");
+      Console.WriteLine("Goal: ");
+      new State(GlobalVar.GOAL).Format();
+    }
   }
+
   public class PriorityQueueState : Priority_Queue.PriorityQueueNode {
     public State NodeState { get; private set;}
     public PriorityQueueState(State state){
       NodeState = state;
     }
   }
-
 }
