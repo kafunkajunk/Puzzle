@@ -12,8 +12,9 @@ namespace a1{
     public static Dictionary<string,int> cost_so_far = new Dictionary<string,int>();
 
 
-    public astar(State istate){
-      CurrentState = istate;
+    public astar(int[] arr){
+
+      CurrentState = new State(arr);
     }
 
     public override void Execute(){

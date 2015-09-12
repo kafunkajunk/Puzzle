@@ -100,6 +100,10 @@ namespace a1{
 	  return new IterativeDepth(arr);
 	case "5":
 	  return new BiDirectional(arr);
+	  case "6":
+	    return new astar(arr);
+
+
       }
       std.WriteLine("Invalid Choice, input was: {0}", input);
       return null;
@@ -113,6 +117,7 @@ namespace a1{
       std.WriteLine("3. Depth-limited");
       std.WriteLine("4. Iterative-deepening"); 
       std.WriteLine("5. Bi-directional");
+      std.WriteLine("6. A*");
 
       return std.ReadLine();
     }
