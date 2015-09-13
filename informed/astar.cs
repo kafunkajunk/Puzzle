@@ -11,9 +11,10 @@ namespace a1{
     public Dictionary<string,int> cost_so_far = new Dictionary<string,int>();
 
 
-    public astar(int[] arr){
-
+    private bool use_manhattan = true;
+    public astar(int[] arr, bool heuristic){
       CurrentState = new State(arr);
+      use_manhattan = heuristic;
     }
 
     public override void Execute(){
@@ -32,7 +33,7 @@ namespace a1{
 	CurrentState = currentnode.NodeState;
 	if(CurrentState.IsEqualToGoal()){
 	  watch.Stop();
-	  
+
 	  SolutionFound(CurrentState);
 
 	  Console.WriteLine("Elapsed time: {0} ms", watch.Elapsed.Milliseconds);
@@ -47,7 +48,12 @@ namespace a1{
 	    if(!cost_so_far.ContainsKey(child.Key) || new_cost < cost_so_far[child.Key]){
 
 	      cost_so_far[child.Key] = new_cost;
-	      int priority = new_cost + ManVal(child.StateArray);
+
+	      int priority = 0;
+
+	      if(use_manhattan) priority = new_cost + ManVal(child.StateArray);
+	      else priority = new_cost + HammingDistance(child.StateArray); 
+
 	      openset.Enqueue(new PriorityQueueState(child),(double)priority);
 
 	      if(!parents.ContainsKey(child.Key)) parents[child.Key] = CurrentState;
@@ -60,6 +66,16 @@ namespace a1{
 
     }
 
+    public static int HammingDistance(int[] arr){
+      var val = 0;
+      for(int i = 0; i < arr.Length; i++){
+	var citem = arr[i];
+	var gitem = GlobalVar.GOAL[i];
+
+	if(citem != gitem) val++;
+      }
+      return val;
+    }
 
     public static int ManVal(int[] arr){
 
@@ -68,14 +84,14 @@ namespace a1{
       // this method works by representing each position of the puzzle as x,y coordinate in euclidean space
       // the entire goal state of the puzzle looking like so:
       /* 
-	   1     2     3
+	 1     2     3
 	 (0,0) (0,1) (0,2) - row of 0
-	   4     5     6
+	 4     5     6
 	 (1,0) (1,1) (1,2) - row of 1
-	   7     8     0
+	 7     8     0
 	 (2,0) (2,1) (2,2) - row of 2
 
-      */
+*/
 
       // lets suppose the puzzle looks like so:
       /*
@@ -130,6 +146,9 @@ namespace a1{
       if(moves.Count > 100) Console.WriteLine("More than 100 ...");
       Console.WriteLine("Goal: ");
       new State(GlobalVar.GOAL).Format();
+
+      
+      Console.WriteLine("Number of expanded nodes: {0}", moves.Count);
     }
   }
 
