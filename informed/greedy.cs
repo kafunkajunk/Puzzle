@@ -8,11 +8,10 @@ namespace a1{
 
     public queue openset = new queue(362880); //9! = 362880 I wouldn't think we'd ever have an open set bigger than this.
     public Dictionary<string,State> parents = new Dictionary<string,State>();
-    public HashSet<string> closedset = new HashSet<string>();
-
 
     public greedy(int[] arr){
       CurrentState = new State(arr);
+      parents[CurrentState.Key] = null;
     }
     public override void Execute(){
 
@@ -46,7 +45,7 @@ namespace a1{
 
 	      int priority = ManVal(child.StateArray);
 	      openset.Enqueue(new PriorityQueueState(child),(double)priority);
-	      if(!parents.ContainsKey(child.Key)) parents[child.Key] = CurrentState;
+	      parents[child.Key] = CurrentState;
 
 	    }
 	  }
@@ -102,7 +101,7 @@ namespace a1{
 
       var temp = FinalState;
       while(true){
-	if(!parents.ContainsKey(temp.Key)) break;
+	if(parents[temp.Key] == null) break;
 	moves.AddFirst(parents[temp.Key]);
 	temp = parents[temp.Key];
       }

@@ -103,6 +103,8 @@ namespace a1{
 	  return new astar(arr, true);
 	case "7":
 	  return new astar(arr, false);
+	case "8":
+	  return new greedy(arr);
       }
       std.WriteLine("Invalid Choice, input was: {0}", input);
       return null;
@@ -118,6 +120,7 @@ namespace a1{
       std.WriteLine("5. Bi-directional");
       std.WriteLine("6. A* using manhattan distances");
       std.WriteLine("7. A* using hamming distances");
+      std.WriteLine("8. Greedy");
 
       return std.ReadLine();
     }
