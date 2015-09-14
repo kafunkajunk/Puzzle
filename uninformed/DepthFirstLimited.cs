@@ -4,7 +4,7 @@ using System;
 namespace a1{
 
   public class DepthFirstLimited : Algorithm {
-    public const int MAX_DEPTH = 100;
+    public const int MAX_DEPTH = 150;
     public Dictionary<string,State> parents = new Dictionary<string,State>();
     public Dictionary<string, State> ClosedSet = new Dictionary<string, State>();
 
