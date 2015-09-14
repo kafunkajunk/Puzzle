@@ -61,9 +61,7 @@ namespace a1{
 	    }
 	  }
 	}
-
       }
-
     }
 
     public static int HammingDistance(int[] arr){
@@ -147,7 +145,7 @@ namespace a1{
       Console.WriteLine("Goal: ");
       new State(GlobalVar.GOAL).Format();
 
-      
+
       Console.WriteLine("Number of expanded nodes: {0}", moves.Count);
     }
   }
