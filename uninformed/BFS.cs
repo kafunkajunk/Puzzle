@@ -45,20 +45,6 @@ namespace a1{
 	    Console.WriteLine("Solution found");
 	    Console.WriteLine("Move list: ");
 	    SolutionFound(CurrentState);
-	    var move = moves.First;
-	    int count = 0;
-	    while(move != null) {
-
-	      Console.WriteLine( move.Value );
-	      move = move.Next;
-
-	      if(count++ > 100) break;
-
-	    }
-	    
-	    if(moves.Count > 100) Console.WriteLine("More than 100 ...");
-	    Console.WriteLine("Goal: ");
-	    new State(GlobalVar.GOAL).Format();
 
 	    break; 
 
@@ -117,6 +103,22 @@ namespace a1{
 	temp = parents[temp.Key];
 
       }
+      var move = moves.First;
+      int count = 0;
+      while(move != null) {
+
+	Console.WriteLine( move.Value );
+	move = move.Next;
+
+	if(count++ > 100) break;
+
+      }
+
+      if(moves.Count > 100) Console.WriteLine("More than 100 ...");
+      Console.WriteLine("Goal: ");
+      new State(GlobalVar.GOAL).Format();
+
+      Console.WriteLine("Number of expanded nodes: {0}",moves.Count);
     }
   }
 }

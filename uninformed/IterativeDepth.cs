@@ -154,6 +154,8 @@ namespace a1
       if(moves.Count > 100) Console.WriteLine("More than 100 ...");
       Console.WriteLine("Goal: ");
       new State(GlobalVar.GOAL).Format();
+
+      Console.WriteLine("Number of expanded nodes: {0}",moves.Count);
     }
   }
 }
